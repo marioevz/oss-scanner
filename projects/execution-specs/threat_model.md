@@ -48,7 +48,6 @@ transaction or a block is untrusted.
 - Accepting an invalid block, or rejecting a valid one (consensus split).
 - Creating, destroying, or stealing ETH.
 - Bypassing signature, nonce, or balance checks.
-- Completely halting the chain.
 
 **High**
 
@@ -60,13 +59,15 @@ transaction or a block is untrusted.
 **Medium**
 
 - Gas mispricing with a limited practical impact.
+- Gas charge ordering that is visible but untested.
 - Incorrect behavior that needs uncommon but reachable conditions.
 - Tests that miss a consensus-breaking bug in the next scheduled fork.
+- Issues in the test framework that lead to the generation of an incorrect or ineffective test.
 
 **Low**
 
 - Mismatched constants with little practical impact.
-- Issues that need very unlikely conditions.
+- Issues that need impossible conditions on mainnet or testnets.
 - Issues in forks still in development.
 
 ## Reports
