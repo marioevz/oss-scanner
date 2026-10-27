@@ -7,17 +7,31 @@ Ethereum execution-layer clients, written as executable Python. Each fork is a
 complete, self-contained package under `src/ethereum/forks/`. The repository
 also contains the testing framework (`packages/testing`) and the tests
 (`tests/`) that generate the reference fixtures every execution client
-(Geth, Nethermind, Besu, Erigon, Reth, etc) is tested against. A bug in the
+(Geth, Nethermind, Besu, Erigon, Reth, etc.) is tested against. A bug in the
 specification is a protocol bug that every client following it inherits, and a
 bug in the tests can hide a client bug.
 
 ## Priorities
 
-1. Forks live on mainnet (up to and including Osaka and its BPO forks).
-2. The next scheduled fork (Amsterdam).
-3. Forks in development (Bogota and later).
+Each fork's status is set by `FORK_CRITERIA` in
+`src/ethereum/forks/<fork>/__init__.py`; read it there rather than assuming a
+fork's status from its name.
+
+1. The live fork and scheduled forks, with equal priority. The live fork is
+   the `ByTimestamp` fork with the highest timestamp that the current Unix time
+   has passed. Scheduled forks are `ByTimestamp` forks whose timestamp is still
+   in the future. Clients must ship a release for any change to either, so
+   both are treated as live.
+2. The next fork: the `Unscheduled` fork with the lowest `order_index`
+   among forks that are not blob-parameter-only (BPO) forks.
+3. Forks after the next fork, in `order_index` order.
 4. Tests and the testing framework, where a bug lets an invalid client
    behavior pass the generated fixtures.
+
+Historical forks are every `ByBlockNumber` fork, and every `ByTimestamp` fork
+before the live one. Clients still execute them when syncing, but every
+release is tested by syncing the existing mainnet chain, so an issue that the
+mainnet chain never triggered cannot affect clients in practice.
 
 ## Out of scope
 
@@ -26,7 +40,6 @@ bug in the tests can hide a client bug.
   the `ethereum_spec_tools` sync or t8n tooling that do not reflect a protocol
   bug.
 - General infrastructure, CI, and documentation issues.
-- Bugs that are no longer applicable to mainnet.
 - Performance issues, unless caused by a design flaw in the protocol (for
   example, mispriced gas).
 - Attacks through the Engine API, JSON-RPC, or devp2p, which are not specified
@@ -70,6 +83,7 @@ transaction or a block is untrusted.
 - Mismatched constants with little practical impact.
 - Issues that need impossible conditions on mainnet or testnets.
 - Issues in forks after the next fork.
+- Issues in historical forks that the mainnet chain never triggered.
 
 ## Reports
 
