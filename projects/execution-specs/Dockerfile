@@ -15,4 +15,4 @@ RUN uv sync --locked
 ENV UV_OFFLINE=1
 
 # Fill a small set of tests to make sure everything works
-RUN uv run fill --fork Osaka --output /tmp/fixtures --clean tests/frontier/opcodes/test_dup.py
+RUN uv run fill --fork Amsterdam --output /tmp/fixtures --clean tests/frontier/opcodes/test_dup.py

@@ -54,21 +54,22 @@ transaction or a block is untrusted.
 - Ambiguities about the validity of a block or transaction.
 - Gas mispricing that lets a block cheaply take down many nodes.
 - State root or receipt mismatches reachable on mainnet.
-- Tests that pass a client with a consensus-breaking bug for a mainnet fork.
+- Tests that pass a client with a consensus-breaking bug for a live fork.
 
 **Medium**
 
 - Gas mispricing with a limited practical impact.
 - Gas charge ordering that is visible but untested.
 - Incorrect behavior that needs uncommon but reachable conditions.
-- Tests that miss a consensus-breaking bug in the next scheduled fork.
-- Issues in the test framework that lead to the generation of an incorrect or ineffective test.
+- Tests that miss a consensus-breaking bug in the next fork.
+- Issues in the test framework that lead to an incorrect or ineffective
+  test.
 
 **Low**
 
 - Mismatched constants with little practical impact.
 - Issues that need impossible conditions on mainnet or testnets.
-- Issues in forks still in development.
+- Issues in forks after the next fork.
 
 ## Reports
 
