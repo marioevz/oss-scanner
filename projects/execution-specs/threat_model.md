@@ -13,25 +13,25 @@ bug in the tests can hide a client bug.
 
 ## Priorities
 
-Each fork's status is set by `FORK_CRITERIA` in
-`src/ethereum/forks/<fork>/__init__.py`; read it there rather than assuming a
-fork's status from its name.
+Each fork's status is listed in the tables of `docs/specs/protocol_history.md`;
+read it there rather than assuming a fork's status from its name.
 
 1. The live fork and scheduled forks, with equal priority. The live fork is
-   the `ByTimestamp` fork with the highest timestamp that the current Unix time
-   has passed. Scheduled forks are `ByTimestamp` forks whose timestamp is still
-   in the future. Clients must ship a release for any change to either, so
-   both are treated as live.
-2. The next fork: the `Unscheduled` fork with the lowest `order_index`
-   among forks that are not blob-parameter-only (BPO) forks.
-3. Forks after the next fork, in `order_index` order.
+   the entry with the highest timestamp that the current Unix time has passed.
+   Scheduled forks are entries, in either table, whose timestamp is still in
+   the future. Clients must ship a release for any change to either, so both
+   are treated as live.
+2. The next fork: the first entry under "Unstable specifications" whose
+   timestamp is still TBD.
+3. Forks after the next fork: the remaining TBD entries under "Unstable
+   specifications", in order.
 4. Tests and the testing framework, where a bug lets an invalid client
    behavior pass the generated fixtures.
 
-Historical forks are every `ByBlockNumber` fork, and every `ByTimestamp` fork
-before the live one. Clients still execute them when syncing, but every
-release is tested by syncing the existing mainnet chain, so an issue that the
-mainnet chain never triggered cannot affect clients in practice.
+Historical forks are the entries under "Stable specifications" before the live
+fork. Clients still execute them when syncing, but every release is tested by
+syncing the existing mainnet chain, so an issue that the mainnet chain never
+triggered cannot affect clients in practice.
 
 ## Out of scope
 
